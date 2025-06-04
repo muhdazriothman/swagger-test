@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:13000"
+      "url": "https://26a8-2001-e68-5879-a700-28f9-d364-ab93-dd33.ngrok-free.app"
     }
   ],
   "paths": {
