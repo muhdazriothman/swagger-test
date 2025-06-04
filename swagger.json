@@ -1,22 +1,39 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "XML User API",
-    "description": "Returns user data in XML format with no request payload required.",
+    "title": "User Listing API",
+    "description": "Lists users associated with a given propertyId. Request is JSON, response is XML.",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https://a564-2001-e68-5879-a700-28f9-d364-ab93-dd33.ngrok-free.app"
+      "url": "http://localhost:13000"
     }
   ],
   "paths": {
-    "/api/xml": {
-      "get": {
-        "summary": "Get XML response without sending any request data",
+    "/api/list-users": {
+      "post": {
+        "summary": "List users by propertyId",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "propertyId": {
+                    "type": "string",
+                    "example": "981116250"
+                  }
+                },
+                "required": ["propertyId"]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "XML response containing user info",
+            "description": "XML response with list of users",
             "content": {
               "application/xml": {
                 "schema": {
@@ -38,36 +55,43 @@
                         "name": "data"
                       },
                       "properties": {
-                        "user": {
-                          "type": "object",
-                          "xml": {
-                            "name": "user"
-                          },
-                          "properties": {
-                            "id": {
-                              "type": "integer",
-                              "example": 1
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "xml": {
+                              "name": "user"
                             },
-                            "name": {
-                              "type": "string",
-                              "example": "John Doe"
-                            },
-                            "email": {
-                              "type": "string",
-                              "example": "john@example.com"
-                            },
-                            "timestamp": {
-                              "type": "string",
-                              "format": "date-time",
-                              "example": "2025-06-04T07:28:20.276Z"
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "John Doe"
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": "john@example.com"
+                              },
+                              "timestamp": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2025-06-04T07:28:20.276Z"
+                              }
                             }
+                          },
+                          "xml": {
+                            "name": "users",
+                            "wrapped": true
                           }
                         }
                       }
                     }
                   }
                 },
-                "example": "<?xml version=\"1.0\"?>\n<response version=\"1.0\">\n  <data>\n    <user>\n      <id>1</id>\n      <name>John Doe</name>\n      <email>john@example.com</email>\n      <timestamp>2025-06-04T07:28:20.276Z</timestamp>\n    </user>\n  </data>\n</response>"
+                "example": "<?xml version=\"1.0\"?>\n<response version=\"1.0\">\n  <data>\n    <users>\n      <user>\n        <id>1</id>\n        <name>John Doe</name>\n        <email>john@example.com</email>\n        <timestamp>2025-06-04T07:28:20.276Z</timestamp>\n      </user>\n      <user>\n        <id>2</id>\n        <name>Jane Smith</name>\n        <email>jane@example.com</email>\n        <timestamp>2025-06-04T08:15:00.000Z</timestamp>\n      </user>\n    </users>\n  </data>\n</response>"
               }
             }
           },
