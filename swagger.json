@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "XML API",
+    "description": "API endpoint for processing XML data",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://a564-2001-e68-5879-a700-28f9-d364-ab93-dd33.ngrok-free.app"
+    }
+  ],
+  "paths": {
+    "/api/xml": {
+      "post": {
+        "summary": "Post XML data",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/xml": {
+              "schema": {
+                "type": "string",
+                "example": "<data><item>Example</item></data>"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful XML response",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  }
+}
