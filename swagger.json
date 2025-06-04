@@ -12,7 +12,7 @@
   ],
   "paths": {
     "/api/xml": {
-      "post": {
+      "get": {
         "summary": "Get XML response without sending any request data",
         "responses": {
           "200": {
