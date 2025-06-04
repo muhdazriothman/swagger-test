@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "XML API",
-    "description": "API endpoint for processing XML data",
+    "title": "XML User API",
+    "description": "Processes XML requests and responds with user data in XML format.",
     "version": "1.0.0"
   },
   "servers": [
@@ -13,26 +13,72 @@
   "paths": {
     "/api/xml": {
       "post": {
-        "summary": "Post XML data",
+        "summary": "Submit XML and get user info",
         "requestBody": {
           "required": true,
           "content": {
             "application/xml": {
               "schema": {
                 "type": "string",
-                "example": "<data><item>Example</item></data>"
+                "example": "<?xml version=\"1.0\"?><request><userId>1</userId></request>"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful XML response",
+            "description": "XML response containing user info",
             "content": {
               "application/xml": {
                 "schema": {
-                  "type": "string"
-                }
+                  "type": "object",
+                  "xml": {
+                    "name": "response"
+                  },
+                  "properties": {
+                    "version": {
+                      "type": "string",
+                      "example": "1.0",
+                      "xml": {
+                        "attribute": true
+                      }
+                    },
+                    "data": {
+                      "type": "object",
+                      "xml": {
+                        "name": "data"
+                      },
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "xml": {
+                            "name": "user"
+                          },
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "John Doe"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "john@example.com"
+                            },
+                            "timestamp": {
+                              "type": "string",
+                              "format": "date-time",
+                              "example": "2025-06-04T07:28:20.276Z"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": "<?xml version=\"1.0\"?>\n<response version=\"1.0\">\n  <data>\n    <user>\n      <id>1</id>\n      <name>John Doe</name>\n      <email>john@example.com</email>\n      <timestamp>2025-06-04T07:28:20.276Z</timestamp>\n    </user>\n  </data>\n</response>"
               }
             }
           },
