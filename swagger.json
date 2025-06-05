@@ -11,10 +11,10 @@
     }
   ],
   "paths": {
-    "/api/get-user": {
+    "/api/list-user": {
       "post": {
-        "summary": "Query users by department ID and user ID",
-        "description": "Accepts an XML payload to query user by department ID and user ID and returns matching users in XML format",
+        "summary": "List users by department ID",
+        "description": "List user by department ID and returns matching users in XML format",
         "operationId": "getUsers",
         "requestBody": {
           "required": true,
@@ -30,15 +30,10 @@
                     "type": "string",
                     "description": "Department ID to filter users",
                     "example": "D001"
-                  },
-                  "userId": {
-                    "type": "string",
-                    "description": "User ID to filter users",
-                    "example": "U001"
                   }
                 }
               },
-              "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<query>\n  <departmentId>D001</departmentId>\n  <userId>U001</userId>\n</query>"
+              "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<query>\n  <departmentId>D001</departmentId>\n</query>"
             }
           }
         },
@@ -112,7 +107,7 @@
                     }
                   }
                 },
-                "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<response version=\"1.0\">\n  <data>\n    <query>\n      <departmentId>D001</departmentId>\n      <userId>U001</userId>\n    </query>\n    <users>\n      <user>\n        <departmentId>D001</departmentId>\n        <userId>U001</userId>\n        <userName>John Doe</userName>\n      </user>\n    </users>\n    <timestamp>2024-03-20T10:30:00Z</timestamp>\n  </data>\n</response>"
+                "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<response version=\"1.0\">\n  <data>\n    <query>\n      <departmentId>D001</departmentId>\n      </query>\n    <users>\n      <user>\n        <departmentId>D001</departmentId>\n        <userId>U001</userId>\n        <userName>John Doe</userName>\n      </user>\n    </users>\n    <timestamp>2024-03-20T10:30:00Z</timestamp>\n  </data>\n</response>"
               }
             }
           },
@@ -123,7 +118,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "Error processing request: Invalid XML payload: XML must contain query with departmentId and userId"
+                "example": "Error processing request: Invalid XML payload: XML must contain query with departmentId"
               }
             }
           }
