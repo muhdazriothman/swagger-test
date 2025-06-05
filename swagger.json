@@ -14,8 +14,8 @@
     "/api/list-users": {
       "post": {
         "summary": "List users by department ID",
-        "description": "List user by department ID and returns matching users in XML format",
-        "operationId": "listUser",
+        "description": "Lists users by department ID and returns matching users in XML format.",
+        "operationId": "listUsersByDepartment",
         "requestBody": {
           "required": true,
           "content": {
@@ -26,14 +26,23 @@
                   "name": "query"
                 },
                 "properties": {
-                  "departmentId": {
-                    "type": "string",
-                    "description": "Department ID to filter users",
-                    "example": "D001"
+                  "query": {
+                    "type": "object",
+                    "properties": {
+                      "departmentId": {
+                        "type": "string",
+                        "description": "Department ID to filter users",
+                        "example": "D001",
+                        "xml": {
+                          "name": "departmentId"
+                        }
+                      }
+                    },
+                    "required": ["departmentId"]
                   }
                 }
               },
-              "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<query>\n  <departmentId>D001</departmentId>\n</query>"
+              "example": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<query>\n  <departmentId>D001</departmentId>\n</query>"
             }
           }
         },
@@ -48,52 +57,50 @@
                     "name": "response"
                   },
                   "properties": {
-                    "$": {
-                      "type": "object",
-                      "properties": {
-                        "version": {
-                          "type": "string",
-                          "example": "1.0"
-                        }
-                      }
-                    },
                     "data": {
                       "type": "object",
+                      "xml": {
+                        "name": "data"
+                      },
                       "properties": {
                         "query": {
                           "type": "object",
+                          "xml": {
+                            "name": "query"
+                          },
                           "properties": {
                             "departmentId": {
                               "type": "string",
-                              "example": "D001"
-                            },
-                            "userId": {
-                              "type": "string",
-                              "example": "U001"
+                              "example": "D001",
+                              "xml": {
+                                "name": "departmentId"
+                              }
                             }
                           }
                         },
                         "users": {
                           "type": "array",
+                          "xml": {
+                            "name": "users",
+                            "wrapped": true
+                          },
                           "items": {
                             "type": "object",
+                            "xml": {
+                              "name": "user"
+                            },
                             "properties": {
-                              "user": {
-                                "type": "object",
-                                "properties": {
-                                  "departmentId": {
-                                    "type": "string",
-                                    "example": "D001"
-                                  },
-                                  "userId": {
-                                    "type": "string",
-                                    "example": "U001"
-                                  },
-                                  "userName": {
-                                    "type": "string",
-                                    "example": "John Doe"
-                                  }
-                                }
+                              "departmentId": {
+                                "type": "string",
+                                "example": "D001"
+                              },
+                              "userId": {
+                                "type": "string",
+                                "example": "U001"
+                              },
+                              "userName": {
+                                "type": "string",
+                                "example": "John Doe"
                               }
                             }
                           }
@@ -107,7 +114,7 @@
                     }
                   }
                 },
-                "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<response version=\"1.0\">\n  <data>\n    <query>\n      <departmentId>D001</departmentId>\n      </query>\n    <users>\n      <user>\n        <departmentId>D001</departmentId>\n        <userId>U001</userId>\n        <userName>John Doe</userName>\n      </user>\n    </users>\n    <timestamp>2024-03-20T10:30:00Z</timestamp>\n  </data>\n</response>"
+                "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<response version=\"1.0\">\n  <data>\n    <query>\n      <departmentId>D001</departmentId>\n    </query>\n    <users>\n      <user>\n        <departmentId>D001</departmentId>\n        <userId>U001</userId>\n        <userName>John Doe</userName>\n      </user>\n    </users>\n    <timestamp>2024-03-20T10:30:00Z</timestamp>\n  </data>\n</response>"
               }
             }
           },
