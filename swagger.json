@@ -1,110 +1,134 @@
-openapi: 3.0.0
-info:
-  title: XML API
-  description: API for querying users with XML request/response format
-  version: 1.0.0
-servers:
-  - url: https://7818-2001-e68-5879-a700-d1db-8495-ea7b-8f0a.ngrok-free.app
-paths:
-  /api/list-users:
-    post:
-      summary: Query users by department ID and user ID
-      description: Accepts an XML payload to query users and returns matching users in XML format
-      operationId: listUsers
-      requestBody:
-        required: true
-        content:
-          application/xml:
-            schema:
-              type: object
-              xml:
-                name: query
-              properties:
-                departmentId:
-                  type: string
-                  description: Department ID to filter users
-                  example: D001
-                userId:
-                  type: string
-                  description: User ID to filter users
-                  example: U001
-            example: |
-              <?xml version="1.0" encoding="UTF-8"?>
-              <query>
-                <departmentId>D001</departmentId>
-                <userId>U001</userId>
-              </query>
-      responses:
-        '200':
-          description: Successful response with matching users
-          content:
-            application/xml:
-              schema:
-                type: object
-                xml:
-                  name: response
-                properties:
-                  $:
-                    type: object
-                    properties:
-                      version:
-                        type: string
-                        example: "1.0"
-                  data:
-                    type: object
-                    properties:
-                      query:
-                        type: object
-                        properties:
-                          departmentId:
-                            type: string
-                            example: D001
-                          userId:
-                            type: string
-                            example: U001
-                      users:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            user:
-                              type: object
-                              properties:
-                                departmentId:
-                                  type: string
-                                  example: D001
-                                userId:
-                                  type: string
-                                  example: U001
-                                userName:
-                                  type: string
-                                  example: John Doe
-                      timestamp:
-                        type: string
-                        format: date-time
-                        example: "2024-03-20T10:30:00Z"
-              example: |
-                <?xml version="1.0" encoding="UTF-8"?>
-                <response version="1.0">
-                  <data>
-                    <query>
-                      <departmentId>D001</departmentId>
-                      <userId>U001</userId>
-                    </query>
-                    <users>
-                      <user>
-                        <departmentId>D001</departmentId>
-                        <userId>U001</userId>
-                        <userName>John Doe</userName>
-                      </user>
-                    </users>
-                    <timestamp>2024-03-20T10:30:00Z</timestamp>
-                  </data>
-                </response>
-        '400':
-          description: Bad request - Invalid XML payload or missing required fields
-          content:
-            text/plain:
-              schema:
-                type: string
-              example: "Error processing request: Invalid XML payload: XML must contain query with departmentId and userId"
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "XML API",
+    "description": "API for querying users with XML request/response format",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://7818-2001-e68-5879-a700-d1db-8495-ea7b-8f0a.ngrok-free.app"
+    }
+  ],
+  "paths": {
+    "/api/list-users": {
+      "post": {
+        "summary": "Query users by department ID and user ID",
+        "description": "Accepts an XML payload to query users and returns matching users in XML format",
+        "operationId": "listUsers",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "xml": {
+                  "name": "query"
+                },
+                "properties": {
+                  "departmentId": {
+                    "type": "string",
+                    "description": "Department ID to filter users",
+                    "example": "D001"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "description": "User ID to filter users",
+                    "example": "U001"
+                  }
+                }
+              },
+              "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<query>\n  <departmentId>D001</departmentId>\n  <userId>U001</userId>\n</query>"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with matching users",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "xml": {
+                    "name": "response"
+                  },
+                  "properties": {
+                    "$": {
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string",
+                          "example": "1.0"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "query": {
+                          "type": "object",
+                          "properties": {
+                            "departmentId": {
+                              "type": "string",
+                              "example": "D001"
+                            },
+                            "userId": {
+                              "type": "string",
+                              "example": "U001"
+                            }
+                          }
+                        },
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "user": {
+                                "type": "object",
+                                "properties": {
+                                  "departmentId": {
+                                    "type": "string",
+                                    "example": "D001"
+                                  },
+                                  "userId": {
+                                    "type": "string",
+                                    "example": "U001"
+                                  },
+                                  "userName": {
+                                    "type": "string",
+                                    "example": "John Doe"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-03-20T10:30:00Z"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<response version=\"1.0\">\n  <data>\n    <query>\n      <departmentId>D001</departmentId>\n      <userId>U001</userId>\n    </query>\n    <users>\n      <user>\n        <departmentId>D001</departmentId>\n        <userId>U001</userId>\n        <userName>John Doe</userName>\n      </user>\n    </users>\n    <timestamp>2024-03-20T10:30:00Z</timestamp>\n  </data>\n</response>"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid XML payload or missing required fields",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Error processing request: Invalid XML payload: XML must contain query with departmentId and userId"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
