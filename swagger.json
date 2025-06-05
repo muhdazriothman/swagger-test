@@ -15,7 +15,7 @@
       "post": {
         "summary": "List users by department ID",
         "description": "List user by department ID and returns matching users in XML format",
-        "operationId": "getUsers",
+        "operationId": "listUser",
         "requestBody": {
           "required": true,
           "content": {
