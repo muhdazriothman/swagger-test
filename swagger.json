@@ -11,11 +11,11 @@
     }
   ],
   "paths": {
-    "/api/list-users": {
+    "/api/get-user": {
       "post": {
         "summary": "Query users by department ID and user ID",
-        "description": "Accepts an XML payload to query users and returns matching users in XML format",
-        "operationId": "listUsers",
+        "description": "Accepts an XML payload to query user by department ID and user ID and returns matching users in XML format",
+        "operationId": "getUsers",
         "requestBody": {
           "required": true,
           "content": {
